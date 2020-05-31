@@ -11,15 +11,21 @@ namespace json_dynamic
             dynamic jObject = new JObject();
             jObject.Property1 = (float)5.6;
             jObject.Property2 = "test";
+            //jObject = null;
 
-            string jsonString = jObject.ToString(Formatting.None);
+            string jsonString = jObject?.ToString(Formatting.None);
             Console.WriteLine(jsonString);
 
-            dynamic json = JValue.Parse(jsonString);
-            if (json != null)
-                Console.WriteLine(json.Property1);
+            if (!string.IsNullOrEmpty(jsonString))
+            {
+                dynamic json = JValue.Parse(jsonString);
+                if (json != null)
+                    Console.WriteLine(json.Property1);
+                else
+                    Console.WriteLine("json null");
+            }
             else
-                Console.WriteLine("json null");
+                Console.WriteLine("json string null");
         }
     }
 }
